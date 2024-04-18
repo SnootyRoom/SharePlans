@@ -1,7 +1,6 @@
 import datetime
 import sqlalchemy
-
-from . import db_session
+from sqlalchemy import orm
 from .db_session import SqlAlchemyBase
 
 
@@ -19,5 +18,9 @@ class User(SqlAlchemyBase):
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    team_leader = sqlalchemy.Column(sqlalchemy.DateTime,
+    modified_date = sqlalchemy.Column(sqlalchemy.DateTime,
                                       default=datetime.datetime.now)
+
+    jobs = orm.relationship("Jobs", back_populates='user')
+
+
